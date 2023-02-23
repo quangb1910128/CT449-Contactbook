@@ -17,8 +17,8 @@ app.use((req, res, next)=>{
 });
 
 app.use((err, rep, res, next)=>{
-    return res.status(error.statusCode || 500).json({
-        message: error.message || "Intenal server Error",
+    return res.status(err.statusCode || 500).json({
+        message: err.message || "Intenal server Error",
     });
 });
 
