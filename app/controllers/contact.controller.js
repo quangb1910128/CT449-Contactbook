@@ -89,11 +89,21 @@ exports.delete =async (req, res, next) => {
     }
 };
 
-exports.deleteAll = async(req, res, next) => {
-   
+exports.deleteAll = async(_req, res, next) => {
+   try{
+    const contactService = new ContactService(MongoDB.client);
+    const deleteCount = await contactService.deleteAll();
+    return res.send({
+        message: '${deleteCount} contacts were deleted successfuly' 
+    });
+   }catch(error){
+        return next(
+            new ApiError(500, "An error occurred while removing all contacts")
+        );
+    }
 };
 
-exports.findAllFavorite =async (req, resn,next) => {
+exports.findAllFavorite =async (_req, res,next) => {
     try {
         const contactService = new ContactService(MongoDB.client) ;
         const documents = await contactService.findFavorite();
